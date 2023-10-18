@@ -87,7 +87,8 @@ findSpotForCol(x) {
 placeInTable(y, x) {
   const piece = document.createElement('div');
   piece.classList.add('piece');
-  piece.style.backgroundColor = this.currPlayer.value;
+  console.log("currPlayer" + this.currPlayer)
+  piece.style.backgroundColor = this.currPlayer.color;
   piece.style.top = -50 * (y + 2);
 
   const spot = document.getElementById(`${y}-${x}`);
@@ -122,7 +123,7 @@ handleClick(evt) {
   if (this.checkForWin()) {
     //add gameOver switch
     this.gameOver = true;
-    return this.endGame(`The ${this.currPlayer.value} Player won!`);
+    return this.endGame(`The ${this.currPlayer.color} Player won!`);
   }
   
   // check for tie
@@ -171,10 +172,17 @@ checkForWin() {
 }
 }
 
-document.getElementById('startGame').addEventListener('click', () => {
-  let p1 = document.querySelector("#p1");
-  let p2 = document.querySelector("#p2");
-  console.log(p1, p2)
+class Player {
+  constuctor(color){
+    this.color = color;
+  }
+}
 
-new Game(p1, p2)
+document.getElementById('startGame').addEventListener('click', () => {
+  let p1Color = document.getElementById('p1Color').value;
+  console.log("player one color" + p1Color);
+  let p1 = new Player(document.getElementById('p1Color').value);
+  console.log("p1 object " + p1)
+  let p2 = new Player(document.getElementById("p2Color").value);
+  new Game(p1, p2)
 });
